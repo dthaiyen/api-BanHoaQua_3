@@ -30,6 +30,11 @@ namespace BLL
         {
             return _res.Search(pageIndex, pageSize, out total, item_group_id);
         }
+
+        public List<ItemModel> Get_Sanpham_New()
+        {
+            return _res.Get_Sanpham_New();
+        }
     }
 
 }

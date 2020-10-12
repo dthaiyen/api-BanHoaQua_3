@@ -66,5 +66,11 @@ namespace API.Controllers
             return response;
         }
 
+        [Route("get_sanpham_new")]
+        [HttpGet]
+        public List<ItemModel> Get_Sanpham_New()
+        {
+            return _itemBusiness.Get_Sanpham_New();
+        }
     }
 }

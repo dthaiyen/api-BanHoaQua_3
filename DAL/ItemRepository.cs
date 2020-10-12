@@ -17,48 +17,15 @@ namespace DAL
 
         public bool Create(ItemModel model)
         {
-            string msgError = "";
-            try
-            {
-                var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_item_create",
-                "@item_id", model.item_id,
-                "@item_group_id", model.item_group_id,
-                "@item_image", model.item_image,
-                "@item_name", model.item_name,
-                "@item_price", model.item_price);
-                if ((result != null && !string.IsNullOrEmpty(result.ToString())) || !string.IsNullOrEmpty(msgError))
-                {
-                    throw new Exception(Convert.ToString(result) + msgError);
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            throw new NotImplementedException();
         }
-        public ItemModel GetDatabyID(string id)
-        {
-            string msgError = "";
-            try
-            {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_item_get_by_id",
-                     "@item_id", id);
-                if (!string.IsNullOrEmpty(msgError))
-                    throw new Exception(msgError);
-                return dt.ConvertTo<ItemModel>().FirstOrDefault();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+
         public List<ItemModel> GetDataAll()
         {
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_item_all");
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_sanpham_all");
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 return dt.ConvertTo<ItemModel>().ToList();
@@ -68,25 +35,31 @@ namespace DAL
                 throw ex;
             }
         }
-        public List<ItemModel> Search(int pageIndex, int pageSize, out long total, string item_group_id)
+
+        public ItemModel GetDatabyID(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<ItemModel> Get_Sanpham_New()
         {
             string msgError = "";
-            total = 0;
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_item_search",
-                    "@page_index", pageIndex,
-                    "@page_size", pageSize,
-                    "@item_group_id", item_group_id);
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_sannpham_new");
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-                if (dt.Rows.Count > 0) total = (long)dt.Rows[0]["RecordCount"];
                 return dt.ConvertTo<ItemModel>().ToList();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+        }
+
+        public List<ItemModel> Search(int pageIndex, int pageSize, out long total, string madm)
+        {
+            throw new NotImplementedException();
         }
     }
 }

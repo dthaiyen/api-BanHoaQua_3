@@ -10,6 +10,7 @@ namespace DAL
         bool Create(ItemModel model);
         ItemModel GetDatabyID(string id);
         List<ItemModel> GetDataAll();
-        List<ItemModel> Search(int pageIndex, int pageSize, out long total, string item_group_id);
+        List<ItemModel> Search(int pageIndex, int pageSize, out long total, string madm);
+        List<ItemModel> Get_Sanpham_New();
     }
 }
