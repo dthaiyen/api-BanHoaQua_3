@@ -36,9 +36,21 @@ namespace DAL
             }
         }
 
-        public ItemModel GetDatabyID(string id)
+        public ItemModel GetDatabyID(int id)
         {
-            throw new NotImplementedException();
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_item_get_by_id",
+                     "@item_id", id);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<ItemModel>().FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public List<ItemModel> Get_Sanpham_New()

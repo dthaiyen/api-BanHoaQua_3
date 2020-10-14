@@ -30,7 +30,7 @@ namespace API.Controllers
 
         [Route("get-by-id/{id}")]
         [HttpGet]
-        public ItemModel GetDatabyID(string id)
+        public ItemModel GetDatabyID(int id)
         {
             return _itemBusiness.GetDatabyID(id);
         }
