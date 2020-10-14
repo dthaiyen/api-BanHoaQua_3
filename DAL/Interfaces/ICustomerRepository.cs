@@ -8,5 +8,6 @@ namespace DAL
     public partial interface ICustomerRepository
     {
         bool Create(CustomerModel model);
+        List<CustomerModel> Get_Khachhang_All();
     }
 }

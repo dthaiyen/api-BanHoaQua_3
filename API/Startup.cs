@@ -48,6 +48,7 @@ namespace API
             services.AddTransient<IHoaDonBusiness, HoaDonBusiness>();
             services.AddTransient<ITintucRepository, TintucRepository>();
             services.AddTransient<ITintucBusiness, TintucBusiness>();
+          
 
         }
 

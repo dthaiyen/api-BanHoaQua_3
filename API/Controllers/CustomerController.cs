@@ -26,6 +26,13 @@ namespace API.Controllers
         {
             _customerBusiness.Create(model);
             return model;
-        } 
+        }
+
+        [Route("get-khachhang")]
+        [HttpGet]
+        public IEnumerable<CustomerModel> GetAllKhachhang()
+        {
+            return _customerBusiness.Get_Khachhang_All();
+        }
     }
 }
