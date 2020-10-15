@@ -35,6 +35,11 @@ namespace BLL
         {
             return _res.Get_Sanpham_New();
         }
+
+        public List<ItemModel> Get_Sanpham_lq(int id)
+        {
+            return _res.Get_Sanpham_lq(id);
+        }
     }
 
 }

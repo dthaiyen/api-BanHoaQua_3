@@ -72,5 +72,11 @@ namespace API.Controllers
         {
             return _itemBusiness.Get_Sanpham_New();
         }
+        [Route("Get_Sanpham_lq/{id}")]
+        [HttpGet]
+        public List<ItemModel> Get_Sanpham_lq(int id)
+        {
+            return _itemBusiness.Get_Sanpham_lq(id);
+        }
     }
 }

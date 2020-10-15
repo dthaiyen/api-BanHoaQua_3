@@ -53,6 +53,22 @@ namespace DAL
             }
         }
 
+        public List<ItemModel> Get_Sanpham_lq(int id)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_sanpham_lq", "@l_id", id);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<ItemModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public List<ItemModel> Get_Sanpham_New()
         {
             string msgError = "";
