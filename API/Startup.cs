@@ -1,5 +1,4 @@
 
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,6 +80,8 @@ namespace API
             services.AddTransient<ITintucBusiness, TintucBusiness>();
             services.AddTransient<IUserBusiness, UserBusiness>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<ILoaiBusiness, LoaiBusiness>();
+            services.AddTransient<ILoaiRepository, LoaiRepository>();
 
         }
 
