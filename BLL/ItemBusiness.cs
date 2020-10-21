@@ -49,6 +49,16 @@ namespace BLL
         {
             return _res.get_san_pham_search(pageIndex, pageSize, out total, search);
         }
+
+        public bool Update(ItemModel model)
+        {
+            return _res.Update(model);
+        }
+
+        public bool Delete(string id)
+        {
+            return _res.Delete(id);
+        }
     }
 
 }

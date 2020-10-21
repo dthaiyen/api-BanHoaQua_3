@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BLL;
@@ -15,9 +16,11 @@ namespace API.Controllers
     public class ItemController : ControllerBase
     {
         private IItemBusiness _itemBusiness;
-        public ItemController(IItemBusiness itemBusiness)
+        private string _path;
+        public ItemController(IItemBusiness itemBusiness, IConfiguration configuration)
         {
             _itemBusiness = itemBusiness;
+            _path = configuration["AppSettings:PATH"];
         }
 
         [Route("create-item")]
@@ -104,6 +107,78 @@ namespace API.Controllers
                 response.PageSize = pageSize;
             }
             return response;
+        }
+        public string SaveFileFromBase64String(string RelativePathFileName, string dataFromBase64String)
+        {
+            if (dataFromBase64String.Contains("base64,"))
+            {
+                dataFromBase64String = dataFromBase64String.Substring(dataFromBase64String.IndexOf("base64,", 0) + 7);
+            }
+            return WriteFileToAuthAccessFolder(RelativePathFileName, dataFromBase64String);
+        }
+        public string WriteFileToAuthAccessFolder(string RelativePathFileName, string base64StringData)
+        {
+            try
+            {
+                string result = "";
+                string serverRootPathFolder = _path;
+                string fullPathFile = $@"{serverRootPathFolder}\{RelativePathFileName}";
+                string fullPathFolder = System.IO.Path.GetDirectoryName(fullPathFile);
+                if (!Directory.Exists(fullPathFolder))
+                    Directory.CreateDirectory(fullPathFolder);
+                System.IO.File.WriteAllBytes(fullPathFile, Convert.FromBase64String(base64StringData));
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+        [Route("delete-item")]
+        [HttpPost]
+        public IActionResult DeleteItem([FromBody] Dictionary<string, object> formData)
+        {
+            string masp = "";
+            if (formData.Keys.Contains("masp") && !string.IsNullOrEmpty(Convert.ToString(formData["masp"]))) { masp = Convert.ToString(formData["masp"]); }
+            _itemBusiness.Delete(masp);
+            return Ok();
+        }
+
+        [Route("create-item")]
+        [HttpPost]
+        public ItemModel CreateUser([FromBody] ItemModel model)
+        {
+            if (model.hinhanh != null)
+            {
+                var arrData = model.hinhanh.Split(';');
+                if (arrData.Length == 3)
+                {
+                    var savePath = $@"assets/images/{arrData[0]}";
+                    model.hinhanh = $"{savePath}";
+                    SaveFileFromBase64String(savePath, arrData[2]);
+                }
+            }
+            //model.user_id = Guid.NewGuid().ToString();
+            _itemBusiness.Create(model);
+            return model;
+        }
+
+        [Route("update-item")]
+        [HttpPost]
+        public ItemModel UpdateUser([FromBody] ItemModel model)
+        {
+            if (model.hinhanh != null)
+            {
+                var arrData = model.hinhanh.Split(';');
+                if (arrData.Length == 3)
+                {
+                    var savePath = $@"assets/images/{arrData[0]}";
+                    model.hinhanh = $"{savePath}";
+                    SaveFileFromBase64String(savePath, arrData[2]);
+                }
+            }
+            _itemBusiness.Update(model);
+            return model;
         }
     }
 }
