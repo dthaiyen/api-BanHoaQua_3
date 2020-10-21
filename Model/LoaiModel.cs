@@ -9,6 +9,8 @@ namespace Model
         public int maloai { get; set; }
         public string tenloai { get; set; }
         public Nullable<int> madm { get; set; }
+      
+
 
     }
 }

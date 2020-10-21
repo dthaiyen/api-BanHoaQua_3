@@ -18,7 +18,7 @@ namespace BLL
         public List<ItemGroupModel> GetData()
         {
             var allItemGroups = _res.GetData();
-            var lstParent = allItemGroups.OrderBy(s => s.chiso).ToList();
+            var lstParent = allItemGroups.ToList();
             foreach (var item in lstParent)
             {
                 item.children = GetHiearchyList(allItemGroups, item);
@@ -36,7 +36,7 @@ namespace BLL
                 lstChilds[i].type = (childs == null || childs.Count == 0) ? "leaf" : "";
                 lstChilds[i].children = childs;
             }
-            return lstChilds.OrderBy(s => s.chiso).ToList();
+            return lstChilds.ToList();
         }
         
     }

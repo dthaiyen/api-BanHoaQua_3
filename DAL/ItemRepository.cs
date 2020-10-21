@@ -89,5 +89,39 @@ namespace DAL
         {
             throw new NotImplementedException();
         }
+        public List<ItemModel> Get_Sanpham_idloai(int id)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_sanpham_by_id" , "@id_loai", id);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<ItemModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<ItemModel> get_san_pham_search(int pageIndex, int pageSize, out long total, string search)
+        {
+            string msgError = "";
+            total = 0;
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_item_search_2", "@page_index", pageIndex, "@page_size", pageSize, "@search", search);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                if (dt.Rows.Count > 0)
+                    total = (long)dt.Rows[0]["RecordCount"];
+                return dt.ConvertTo<ItemModel>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

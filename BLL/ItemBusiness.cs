@@ -40,6 +40,15 @@ namespace BLL
         {
             return _res.Get_Sanpham_lq(id);
         }
+        public List<ItemModel> Get_Sanpham_idloai(int id)
+        {
+            return _res.Get_Sanpham_idloai(id);
+        }
+
+        public List<ItemModel> get_san_pham_search(int pageIndex, int pageSize, out long total, string search)
+        {
+            return _res.get_san_pham_search(pageIndex, pageSize, out total, search);
+        }
     }
 
 }
