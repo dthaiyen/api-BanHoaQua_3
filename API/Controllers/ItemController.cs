@@ -96,7 +96,7 @@ namespace API.Controllers
             var page = int.Parse(formData["page"].ToString());
             var pageSize = int.Parse(formData["pageSize"].ToString());
             string search = "";
-            if (formData.Keys.Contains("search") && !string.IsNullOrEmpty(Convert.ToString(formData["search"])))
+            if (formData.Keys.Contains("search") && !string.IsNullOrEmpty(Convert.ToString(formData["search"]))) 
             {
                 search = formData["search"].ToString();
                 long total = 0;
@@ -108,6 +108,29 @@ namespace API.Controllers
             }
             return response;
         }
+
+        [Route("get_san_pham_admin")]
+        [HttpPost]
+        public ResponseModel get_san_pham_admin([FromBody] Dictionary<string, object> formData)
+        {
+            var response = new ResponseModel();
+            var page = int.Parse(formData["page"].ToString());
+            var pageSize = int.Parse(formData["pageSize"].ToString());
+            string search = "";
+            if (formData.Keys.Contains("search") && !string.IsNullOrEmpty(Convert.ToString(formData["search"])))
+            {
+                search = formData["search"].ToString();
+            }
+            long total = 0;
+            var data = _itemBusiness.get_san_pham_search(page, pageSize, out total, search);
+            response.TotalItems = total;
+            response.Data = data;
+            response.Page = page;
+            response.PageSize = pageSize;
+            return response;
+        }
+
+
         public string SaveFileFromBase64String(string RelativePathFileName, string dataFromBase64String)
         {
             if (dataFromBase64String.Contains("base64,"))
