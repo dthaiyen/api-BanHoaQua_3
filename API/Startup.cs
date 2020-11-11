@@ -5,8 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BLL;
+using BLL.Interfaces;
 using DAL;
 using DAL.Helper;
+using DAL.Interfaces;
 using Helper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -82,6 +84,8 @@ namespace API
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ILoaiBusiness, LoaiBusiness>();
             services.AddTransient<ILoaiRepository, LoaiRepository>();
+            services.AddTransient<IthongkeBusiness, ThongkeBusiness>();
+            services.AddTransient<IthongkeRespo, ThongkeRespo>();
 
         }
 
